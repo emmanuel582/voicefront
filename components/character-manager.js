@@ -37,7 +37,7 @@ class CharacterManager {
 
     try {
       // Upload to HeyGen first
-      const heyGen = (await import('../api/heygen.js')).default;
+      const heyGen = (await import('../services/heygen.js')).default;
       const heygenAsset = await heyGen.uploadAsset(file, 'image');
 
       if (!heygenAsset || !heygenAsset.id) {

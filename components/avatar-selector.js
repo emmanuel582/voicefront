@@ -1,5 +1,5 @@
 // Avatar Selector Component
-import heyGen from '../api/heygen.js';
+import heyGen from '../services/heygen.js';
 
 class AvatarSelector {
     constructor() {
