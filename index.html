@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Transform your voice into stunning AI-powered talking videos with custom avatars and voices">
+  <title>Voice to Video - AI Talking Avatar Generator</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+      <div>
+        <h1>Voice to Video</h1>
+        <p class="header-subtitle">Transform your voice into stunning AI-powered talking videos</p>
+      </div>
+      <button id="view-history-btn" class="btn btn-secondary" style="margin-top: 0;">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        View History
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container">
+
+    <!-- Step Indicator -->
+    <div class="step-indicator">
+      <div class="step-item active" data-step="1">
+        <div class="step-number">1</div>
+        <div class="step-label">Record</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" data-step="2">
+        <div class="step-number">2</div>
+        <div class="step-label">Avatar</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" data-step="3">
+        <div class="step-number">3</div>
+        <div class="step-label">Voice</div>
+      </div>
+      <div class="step-line"></div>
+      <div class="step-item" data-step="4">
+        <div class="step-number">4</div>
+        <div class="step-label">Generate</div>
+      </div>
+    </div>
+
+    <!-- Step 1: Voice Recording -->
+    <section id="step-1" class="step-content active">
+      <div class="glass-card">
+        <h2>
+          <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none"
+            style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" />
+          </svg>
+          Step 1: Record Your Voice
+        </h2>
+        <p>Record your message that will be used for the video</p>
+
+        <div class="recorder">
+          <div id="recording-indicator" class="recording-indicator hidden">
+            <div class="recording-dot"></div>
+            <span>Recording...</span>
+          </div>
+
+          <div id="recorder-timer" class="recorder-timer">00:00</div>
+
+          <div id="waveform" class="waveform hidden">
+            <div class="waveform-bars">
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+              <div class="waveform-bar"></div>
+            </div>
+          </div>
+
+          <div class="recorder-controls">
+            <button id="record-btn" class="btn btn-primary">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+              Start Recording
+            </button>
+            <button id="stop-btn" class="btn btn-secondary" disabled>
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <rect x="6" y="6" width="12" height="12" />
+              </svg>
+              Stop
+            </button>
+            <button id="play-btn" class="btn btn-secondary" disabled>
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+              Play
+            </button>
+          </div>
+
+          <p id="recording-status" class="mt-md" style="color: var(--color-gray-400); text-align: center;">
+          </p>
+        </div>
+
+        <div class="step-actions">
+          <button id="next-to-avatar" class="btn btn-primary" disabled>
+            Next: Choose Avatar
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 2: Avatar Selection -->
+    <section id="step-2" class="step-content">
+      <div class="glass-card">
+        <h2>
+          <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none"
+            style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          Step 2: Select Avatar
+        </h2>
+        <p>Choose a preset avatar or upload your own character</p>
+
+        <div class="tabs mt-md">
+          <button class="tab avatar-tab active" data-tab="preset">Preset Avatars</button>
+          <button class="tab avatar-tab" data-tab="custom">My Characters</button>
+        </div>
+
+        <div class="avatar-tab-content active" data-tab="preset">
+          <div id="preset-avatars-grid" class="character-grid">
+            <div class="loading-state">
+              <div class="loading-spinner"></div>
+              <p>Loading avatars...</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="avatar-tab-content" data-tab="custom">
+          <div id="upload-area" class="upload-area mb-md">
+            <div class="upload-icon">
+              <svg class="icon icon-xl" viewBox="0 0 24 24" fill="none">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                <polyline points="17 8 12 3 7 8" />
+                <line x1="12" y1="3" x2="12" y2="15" />
+              </svg>
+            </div>
+            <h3>Upload Character Image</h3>
+            <p>Click or drag and drop to upload (JPG, PNG, WebP)</p>
+            <input type="file" id="character-upload-input" accept="image/jpeg,image/png,image/webp"
+              style="display: none;">
+          </div>
+          <div id="custom-characters-grid" class="character-grid"></div>
+        </div>
+
+        <div class="step-actions">
+          <button id="back-to-record" class="btn btn-secondary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Back
+          </button>
+          <button id="next-to-voice" class="btn btn-primary" disabled>
+            Next: Choose Voice
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 3: Voice Selection -->
+    <section id="step-3" class="step-content">
+      <div class="glass-card">
+        <h2>
+          <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none"
+            style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+          </svg>
+          Step 3: Select Voice
+        </h2>
+        <p>Choose a preset AI voice or use your recorded voice</p>
+
+        <div class="mt-md">
+          <div class="voice-option">
+            <label class="voice-option-label">
+              <input type="radio" name="voice-type" id="preset-voice-radio" checked>
+              <span class="voice-option-title">Use Preset Voice</span>
+            </label>
+
+            <div id="preset-voice-section" class="voice-option-content">
+              <select id="voice-select" class="select">
+                <option value="">Loading voices...</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="voice-option">
+            <label class="voice-option-label">
+              <input type="radio" name="voice-type" id="custom-voice-radio">
+              <span class="voice-option-title">Use My Voice</span>
+            </label>
+
+            <div id="custom-voice-section" class="voice-option-content" style="display: none;">
+              <p style="color: var(--color-gray-400);">Your recorded voice will be used for the video</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button id="back-to-avatar" class="btn btn-secondary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Back
+          </button>
+          <button id="next-to-generate" class="btn btn-primary" disabled>
+            Next: Generate Video
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <polyline points="9 18 15 12 9 6" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Step 4: Generate Video -->
+    <section id="step-4" class="step-content">
+      <div class="glass-card text-center">
+        <h2>
+          <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none"
+            style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+            <polygon points="23 7 16 12 23 17 23 7" />
+            <rect x="1" y="5" width="15" height="14" rx="2" />
+          </svg>
+          Step 4: Generate Your Video
+        </h2>
+        <p>Review your selections and create your AI-powered talking video</p>
+
+        <div class="summary-card mt-lg">
+          <h3>Summary</h3>
+          <div class="summary-grid">
+            <div class="summary-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" />
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2M12 19v4M8 23h8" />
+              </svg>
+              <div>
+                <strong>Voice Recording</strong>
+                <p id="summary-recording">Ready</p>
+              </div>
+            </div>
+            <div class="summary-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="7" r="4" />
+                <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" />
+              </svg>
+              <div>
+                <strong>Avatar</strong>
+                <p id="summary-avatar">Not selected</p>
+              </div>
+            </div>
+            <div class="summary-item">
+              <svg class="icon" viewBox="0 0 24 24" fill="none">
+                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              </svg>
+              <div>
+                <strong>Voice</strong>
+                <p id="summary-voice">Not selected</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-actions">
+          <button id="back-to-voice" class="btn btn-secondary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+            Back
+          </button>
+          <button id="generate-video-btn" class="btn btn-primary" style="font-size: 1.125rem; padding: 1rem 2rem;">
+            <svg class="icon" viewBox="0 0 24 24" fill="none">
+              <circle cx="12" cy="12" r="10" />
+              <polygon points="10 8 16 12 10 16 10 8" />
+            </svg>
+            Generate Video
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Video Result Modal -->
+  <div id="video-result-modal" class="modal">
+    <div class="modal-content modal-large">
+      <button id="close-video-modal" class="modal-close">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <h2>
+        <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none"
+          style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
+        </svg>
+        Your Video is Ready!
+      </h2>
+
+      <div class="video-container mt-md">
+        <video id="video-player" class="video-player" controls></video>
+      </div>
+
+      <div class="modal-actions">
+        <button id="download-video-btn" class="btn btn-primary">
+          <svg class="icon" viewBox="0 0 24 24" fill="none">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          Download Video
+        </button>
+        <button id="create-another-btn" class="btn btn-secondary">
+          Create Another Video
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading Modal -->
+  <div id="loading-modal" class="modal">
+    <div class="modal-content">
+      <div class="loading-animation">
+        <div class="loading-spinner"></div>
+        <h3>Processing</h3>
+        <p id="loading-status-text" class="loading-text">Please wait...</p>
+        <div class="loading-dots">
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+          <div class="loading-dot"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="history-modal" class="modal">
+    <div class="modal-content modal-large">
+      <button id="close-history-modal" class="modal-close">
+        <svg class="icon" viewBox="0 0 24 24" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>
+      </button>
+
+      <h2>
+        <svg class="icon icon-lg" viewBox="0 0 24 24" fill="none"
+          style="display: inline-block; vertical-align: middle; margin-right: 0.5rem;">
+          <circle cx="12" cy="12" r="10" />
+          <polyline points="12 6 12 12 16 14" />
+        </svg>
+        Video History
+      </h2>
+
+      <div id="history-content" class="mt-md">
+        <div class="loading-state">
+          <div class="loading-spinner"></div>
+          <p>Loading history...</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scripts -->
+  <script type="module" src="app.js"></script>
+</body>
+
+</html>
