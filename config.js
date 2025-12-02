@@ -1,14 +1,14 @@
-// Application Configuration
-// This file uses environment-aware settings for deployment
 
 const CONFIG = {
-    // Backend API URL - automatically detects environment
-    // In production, set BACKEND_URL environment variable or it will use the current domain
-    BACKEND_URL: typeof window !== 'undefined' && window.BACKEND_URL
-        ? window.BACKEND_URL
-        : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
-            ? 'http://localhost:3000'
-            : window.location.origin),
+
+    BACKEND_URL:
+        typeof window !== 'undefined' && window.BACKEND_URL
+            ? window.BACKEND_URL
+            : process.env.NEXT_PUBLIC_BACKEND_URL ||
+            (window.location.hostname === 'localhost'
+                ? 'http://localhost:3000'
+                : window.location.origin),
+
 
     // API Endpoints
     HEYGEN: {
