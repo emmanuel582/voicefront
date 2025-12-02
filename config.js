@@ -1,18 +1,19 @@
+// Application Configuration
+// This file uses environment-aware settings for deployment
 
 const CONFIG = {
-
+    // Backend URL - Set via environment variable in hosting platform
+    // For Vercel: Add BACKEND_URL environment variable in project settings
+    // For local development: defaults to http://localhost:3000
     BACKEND_URL:
-        typeof window !== 'undefined' && window.BACKEND_URL
+        (typeof window !== 'undefined' && window.BACKEND_URL)
             ? window.BACKEND_URL
-            : process.env.NEXT_PUBLIC_BACKEND_URL ||
-            (window.location.hostname === 'localhost'
+            : (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
                 ? 'http://localhost:3000'
-                : window.location.origin),
-
+                : '__BACKEND_URL__', // This will be replaced during build/deployment
 
     // API Endpoints
     HEYGEN: {
-        // Use backend proxy server to bypass CORS restrictions
         BASE_URL: '', // Will be set dynamically
         UPLOAD_URL: '', // Will be set dynamically
         ENDPOINTS: {
