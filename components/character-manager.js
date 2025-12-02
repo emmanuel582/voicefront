@@ -132,6 +132,11 @@ class CharacterManager {
   }
 
   createImageUrl(blob) {
+    // Validate blob before creating URL
+    if (!blob || !(blob instanceof Blob)) {
+      console.warn('Invalid blob provided to createImageUrl:', blob);
+      return 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100"%3E%3Crect fill="%23ddd" width="100" height="100"/%3E%3C/svg%3E';
+    }
     return URL.createObjectURL(blob);
   }
 

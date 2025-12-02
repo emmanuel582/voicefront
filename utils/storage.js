@@ -32,11 +32,11 @@ class CharacterStorage {
         });
     }
 
-    async saveCharacter(imageBlob, name, isDefault = false) {
+    async saveCharacter(characterData) {
         if (!this.db) await this.initDB();
 
         // If setting as default, unset all other defaults first
-        if (isDefault) {
+        if (characterData.isDefault) {
             await this.clearAllDefaults();
         }
 
@@ -44,14 +44,12 @@ class CharacterStorage {
             const transaction = this.db.transaction([CONFIG.CHARACTER.STORE_NAME], 'readwrite');
             const objectStore = transaction.objectStore(CONFIG.CHARACTER.STORE_NAME);
 
-            const character = {
-                name,
-                imageBlob,
-                isDefault,
-                createdAt: new Date().toISOString()
-            };
+            // Ensure createdAt is set if not provided
+            if (!characterData.createdAt) {
+                characterData.createdAt = new Date().toISOString();
+            }
 
-            const request = objectStore.add(character);
+            const request = objectStore.add(characterData);
             request.onsuccess = () => resolve(request.result);
             request.onerror = () => reject(request.error);
         });
