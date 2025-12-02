@@ -53,7 +53,14 @@ class VideoGenerator {
                     voice_id: voiceSelection.voice.voice_id
                 };
             } else {
-                // CUSTOM VOICE: Convert audio to WAV, then upload
+                // CUSTOM VOICE: Need to upload audio AND get transcript
+                // For talking photos, HeyGen needs BOTH audio and text for lip sync
+
+                // First, transcribe the audio to get text for lip sync
+                this.loadingModal.showTranscribing();
+                transcript = await assemblyAI.getTranscript(audioBlob);
+
+                // Then convert and upload the audio
                 this.loadingModal.show('Converting audio...');
                 try {
                     // Convert WebM to WAV format (HeyGen compatible)

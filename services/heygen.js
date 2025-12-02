@@ -151,9 +151,11 @@ class HeyGenService {
                 };
             } else if (config.voice.type === 'audio') {
                 // Audio-based voice (uploaded audio)
+                // For talking photos, we need BOTH audio and text for lip sync
                 videoInput.voice = {
                     type: 'audio',
-                    audio_asset_id: config.voice.audio_asset_id
+                    audio_asset_id: config.voice.audio_asset_id,
+                    input_text: config.text || ''  // Required for lip sync with photos
                 };
             }
 
