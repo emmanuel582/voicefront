@@ -28,8 +28,8 @@ const CONFIG = {
     ASSEMBLYAI: {
         BASE_URL: '', // Will be set dynamically
         ENDPOINTS: {
-            UPLOAD: '/upload',
-            TRANSCRIPT: '/transcript'
+            UPLOAD: '/v2/upload',
+            TRANSCRIPT: '/v2/transcript'
         }
     },
 
